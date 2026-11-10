@@ -1,0 +1,32 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "lets-sticky",
+  "main": "worker/index.ts",
+  "compatibility_date": "2026-11-01",
+  "assets": {
+    "not_found_handling": "single-page-application",
+    "run_worker_first": ["/api/*", "/f/*"]
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "lets-sticky",
+      "database_id": "2e14dcc6-2027-4813-b180-5f507a47f94d"
+    }
+  ],
+  "r2_buckets": [
+    {
+      "binding": "FILES",
+      "bucket_name": "lets-sticky-files"
+    }
+  ],
+  "routes": [
+    {
+      "pattern": "memo.letscoding.kr",
+      "custom_domain": true
+    }
+  ],
+  "observability": {
+    "enabled": true
+  }
+}
