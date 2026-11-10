@@ -296,8 +296,15 @@ textarea.input {
   text-overflow: ellipsis;
 }
 
-button.chip {
-  display: inline-block;
+.chip svg {
+  flex: none;
+  margin: 0 5px 0 -3px;
+  color: var(--ink-3);
+}
+
+.chip span {
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .chip:hover {
@@ -947,7 +954,9 @@ video.note-media {
   display: flex;
   flex-direction: column;
   width: 100%;
-  max-height: 100%;
+  /* 배경의 위아래 여백(24px)을 뺀 높이를 넘지 않게 하고, 넘치는 내용은 본문에서 스크롤한다 */
+  max-height: calc(100vh - 48px);
+  max-height: calc(100dvh - 48px);
   border-radius: 14px;
   background: var(--surface);
   box-shadow: var(--shadow-pop);
@@ -980,7 +989,14 @@ video.note-media {
   line-height: 1.4;
 }
 
+.modal-head,
+.modal-foot {
+  flex: none;
+}
+
 .modal-body {
+  flex: 1 1 auto;
+  min-height: 0;
   padding: 14px 20px 20px;
   overflow-y: auto;
   overscroll-behavior: contain;
@@ -1691,6 +1707,11 @@ video.note-media {
   .modal-backdrop {
     place-items: end center;
     padding: 24px 0 0;
+  }
+
+  .modal {
+    max-height: calc(100vh - 24px);
+    max-height: calc(100dvh - 24px);
   }
 
   .modal,

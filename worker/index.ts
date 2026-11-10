@@ -71,6 +71,18 @@ app.use("*", async (c, next) => {
 
 app.get("/api/me", async (c) => c.json({ admin: await isAdmin(c) }));
 
+app.put("/api/me/name", async (c) => {
+  const me = clientId(c);
+  if (!me) return fail(c, 400, "잘못된 요청입니다.");
+  const name = text((await readJson(c)).name, 30);
+  if (!name) return fail(c, 400, "이름을 입력하세요.");
+  await c.env.DB.batch([
+    c.env.DB.prepare("UPDATE posts SET author = ? WHERE owner = ?").bind(name, me),
+    c.env.DB.prepare("UPDATE responses SET name = ? WHERE respondent = ?").bind(name, me),
+  ]);
+  return c.json({ ok: true });
+});
+
 app.post("/api/admin/login", async (c) => {
   const { password } = await readJson(c);
   const expected = c.env.ADMIN_PASSWORD;

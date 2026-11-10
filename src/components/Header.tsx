@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 import { useApp } from "../app-context";
 import { Link } from "../router";
-import { BackIcon } from "./Icons";
+import { BackIcon, UserIcon } from "./Icons";
 
 export function Header({ title, actions }: { title?: string; actions?: ReactNode }) {
   const { name, editName, admin } = useApp();
@@ -28,8 +28,9 @@ export function Header({ title, actions }: { title?: string; actions?: ReactNode
               관리자
             </Link>
           )}
-          <button className="chip" onClick={editName}>
-            {name || "이름 설정"}
+          <button className="chip" onClick={editName} title="내 이름">
+            <UserIcon size={14} />
+            <span>{name || "이름 설정"}</span>
           </button>
         </div>
       </div>

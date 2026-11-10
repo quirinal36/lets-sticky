@@ -63,6 +63,10 @@ export function App() {
   );
 
   const saveName = (value: string) => {
+    // 이름을 바꾸면 이미 올린 내 게시물과 설문 응답의 작성자 이름도 함께 바뀐다
+    if (name && value !== name) {
+      api("/api/me/name", { method: "PUT", body: { name: value } }).catch((err: Error) => toast(err.message));
+    }
     setName(value);
     try {
       localStorage.setItem(NAME_KEY, value);
@@ -145,13 +149,13 @@ function NameDialog({ initial, onSave, onClose }: { initial: string; onSave: (na
     if (trimmed) onSave(trimmed);
   };
   return (
-    <Modal title="이름" size="sm" onClose={onClose}>
+    <Modal title="내 이름" size="sm" onClose={onClose}>
       <form onSubmit={submit} className="stack">
         <input
           className="input"
           value={value}
           onChange={(e) => setValue(e.target.value)}
-          placeholder="게시물에 표시될 이름"
+          placeholder="작성자로 표시됩니다 (예: 홍길동)"
           maxLength={30}
           autoFocus
           autoComplete="off"
